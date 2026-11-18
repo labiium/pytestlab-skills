@@ -9,7 +9,7 @@ Get the user from an instrument and a measurement goal to a working PyTestLab pr
 
 ## Install and inspect
 
-For a new project, create `.venv`, activate it and install `pytestlab`. PyTestLab already includes the PyVISA Python API and PyUSB as dependencies; do not ask the user to install PyVISA separately. Keep a working VISA backend. Only if backend initialization fails, diagnose with `python -m pyvisa info` and add the appropriate backend, such as `pyvisa-py`, or use an installed vendor VISA runtime. USB with the pure-Python backend may also need system libusb/driver support; GPIB has its own backend requirements. Install only what is actually missing.
+For a new project, create `.venv`, activate it and install `pytestlab`. PyTestLab already includes the PyVISA Python API and PyUSB as dependencies; do not ask the user to install PyVISA separately. Keep a working VISA backend. Only if backend initialization fails, diagnose with `pyvisa-info` and add the appropriate backend, such as `pyvisa-py`, or use an installed vendor VISA runtime. USB with the pure-Python backend may also need system libusb/driver support; GPIB has its own backend requirements. Install only what is actually missing.
 
 ```sh
 python -m venv .venv
