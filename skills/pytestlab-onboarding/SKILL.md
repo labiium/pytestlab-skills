@@ -9,12 +9,12 @@ Get the user from an instrument and a measurement goal to a working PyTestLab pr
 
 ## Install and inspect
 
-For a new project, create `.venv`, activate it and install `pytestlab`. For VISA without an installed vendor runtime, add `pyvisa-py`; it supports the LAN example below. USB/GPIB may need platform drivers or additional libraries. Install only what the chosen connection needs.
+For a new project, create `.venv`, activate it and install `pytestlab`. PyTestLab already includes the PyVISA Python API and PyUSB as dependencies; do not ask the user to install PyVISA separately. Keep a working VISA backend. Only if backend initialization fails, diagnose with `python -m pyvisa info` and add the appropriate backend, such as `pyvisa-py`, or use an installed vendor VISA runtime. USB with the pure-Python backend may also need system libusb/driver support; GPIB has its own backend requirements. Install only what is actually missing.
 
 ```sh
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install pytestlab pyvisa-py
+python -m pip install pytestlab
 ptl --version
 ptl --help
 ```
@@ -23,7 +23,15 @@ On Windows activate with `.venv\Scripts\Activate.ps1`. Record the installed vers
 
 ## Discover the equipment
 
-`ptl profile list` lists **supported profiles**, not physical devices. Inspect `ptl instrument --help` for version-specific instrument discovery. If no discovery subcommand exists, run this PyVISA discovery snippet in its own short Python process (not inside an active experiment session):
+`ptl profile list` lists **supported profiles**, not physical devices. Check top-level `ptl --help`, then `ptl visa --help`. On versions with the discovery CLI, use:
+
+```sh
+ptl visa list
+```
+
+This lists USB/GPIB/LAN VISA resources visible to the configured backend without opening them or sending instrument commands. Do not add `--idn` automatically: that option opens each listed resource and queries it. `ptl lamb list` is available in newer builds for resources exposed by an existing LAMB server; use it only when that is the user's connection path.
+
+**Release distinction:** the inspected current development checkout has `ptl visa list`, but public PyPI 0.2.4 and the inspected public master do not. Never claim installing 0.2.4 supplies this command. If the installed version lacks it, run this fallback in its own short Python process (not inside an active experiment session):
 
 ```python
 import pyvisa

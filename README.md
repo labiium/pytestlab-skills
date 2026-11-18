@@ -34,7 +34,7 @@ cp -R pytestlab-skills/skills/* .claude/skills/
 
 ## Compatibility and verification
 
-The onboarding and experiment APIs were checked against public PyTestLab **0.2.4**. The profile-authoring skill also supports development workflows and starts by checking the actual installed schema/CLI; newer fields and validators are not assumed to exist in 0.2.4. `ptl list` lists software resources, not attached equipment. Hardware discovery uses PyVISA when the installed CLI has no discovery command.
+The onboarding and experiment APIs were checked against public PyTestLab **0.2.4**. The profile-authoring skill also supports development workflows and starts by checking the actual installed schema/CLI; newer fields and validators are not assumed to exist in 0.2.4. `ptl list` lists software resources, not attached equipment. Use `ptl visa list` when the installed version exposes it. The inspected development checkout has that CLI, but public 0.2.4 and the inspected public master do not, so those releases use the PyVISA fallback. PyVISA and PyUSB are already PyTestLab dependencies; only install a separate VISA backend or system USB driver if missing.
 
 These skills do not bundle instrument drivers, programming manuals, a VISA runtime or a simulated oscilloscope. Public hardware profiles need not contain simulation behavior. Hardware acquisition requires compatible equipment and an approved physical setup; installing the skill does not validate that setup. No live equipment was operated to validate this skill package.
 
